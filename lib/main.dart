@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+void main() {
+  runApp(
+    MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           title: Text('I Am Rich'),
@@ -18,6 +15,6 @@ class MyApp extends StatelessWidget {
         ),
         backgroundColor: Colors.teal,
       ),
-    );
-  }
+    ),
+  );
 }
