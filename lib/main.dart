@@ -13,43 +13,31 @@ class MyApp extends StatelessWidget {
         backgroundColor: Colors.teal,
         body: SafeArea(
           child: Row(
-            // mainAxisSize: MainAxisSize.min,
-            // verticalDirection: VerticalDirection.up,
-            // mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                color: Colors.white,
-                child: Text('Container 1'),
-                // height: 100.0,
-                // margin: EdgeInsets.fromLTRB(20.0, 15.0, 30.0, 35.0),
-                // padding: EdgeInsets.all(15.0),
-                width: 100.0,
-              ),
-              SizedBox(
-                // height: 10.0,
-                width: 20.0,
-              ),
-              Container(
-                child: Text('Container 2'),
                 color: Colors.red,
-                // height: 100.0,
                 width: 100.0,
               ),
-              SizedBox(
-                // height: 10.0,
-                width: 20.0,
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    color: Colors.yellow,
+                    height: 100.0,
+                    width: 100.0,
+                  ),
+                  Container(
+                    color: Colors.green,
+                    height: 100.0,
+                    width: 100.0,
+                  )
+                ],
               ),
               Container(
-                child: Text('Container 3'),
-                color: Colors.amber,
-                // height: 100.0,
+                color: Colors.blue,
                 width: 100.0,
-              ),
-              // Container(
-              //   width: double.infinity,
-              //   color: Colors.black,
-              // )
+              )
             ],
           ),
         ),
