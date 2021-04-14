@@ -23,6 +23,31 @@ class MyApp extends StatelessWidget {
 class DicePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Center(
+      child: Row(
+        children: [
+          Expanded(
+            child: TextButton(
+              child: Image.asset('images/dice1.png'),
+              onPressed: () {
+                print('left button pressed');
+              },
+            ),
+            flex: 2,
+          ),
+          Expanded(
+            child: TextButton(
+              child: Image.asset('images/dice2.png'),
+              onPressed: onDicePress,
+            ),
+            flex: 2,
+          )
+        ],
+      ),
+    );
+  }
+
+  void onDicePress() {
+    print('dice pressed');
   }
 }
