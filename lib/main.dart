@@ -55,10 +55,14 @@ class _DicePageState extends State<DicePage> {
     );
   }
 
+  int getDiceNumber() {
+    return Random().nextInt(6) + 1;
+  }
+
   void onDicePress() {
     setState(() {
-      leftDiceNumber = Random().nextInt(6) + 1;
-      rightDiceNumber = Random().nextInt(6) + 1;
+      leftDiceNumber = getDiceNumber();
+      rightDiceNumber = getDiceNumber();
     });
   }
 }
