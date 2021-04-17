@@ -2,27 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'QuizBrain.dart';
 
-void main() {
-  runApp(Quizzler());
-}
-
-class Quizzler extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        backgroundColor: Colors.grey.shade900,
-        body: SafeArea(
-          child: Padding(
-            child: QuizPage(),
-            padding: EdgeInsets.symmetric(horizontal: 10.0),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class QuizPage extends StatefulWidget {
   @override
   _QuizPageState createState() => _QuizPageState();
