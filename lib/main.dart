@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 import 'QuizBrain.dart';
 
@@ -29,6 +30,7 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
+  BuildContext _context;
   QuizBrain _quizBrain = QuizBrain();
 
   Icon correctIcon = Icon(
@@ -43,12 +45,17 @@ class _QuizPageState extends State<QuizPage> {
 
   void onAnswer(bool answer) {
     setState(() {
-      if (!_quizBrain.isFinished()) {
-        scoreKeeper
-            .add(_quizBrain.checkAnswer(answer) ? correctIcon : wrongIcon);
-        _quizBrain.nextQuestion();
-      } else {
+      scoreKeeper.add(_quizBrain.checkAnswer(answer) ? correctIcon : wrongIcon);
+      _quizBrain.nextQuestion();
+      if (_quizBrain.isFinished()) {
         // TODO: add Alert();
+        Alert(
+          context: _context,
+          title: 'Finished!',
+          desc: 'You\'ve reached the end of the quiz.',
+        ).show();
+        _quizBrain.resetQuiz();
+        scoreKeeper.clear();
       }
     });
   }
@@ -80,6 +87,7 @@ class _QuizPageState extends State<QuizPage> {
 
   @override
   Widget build(BuildContext context) {
+    this._context = context;
     return Column(
       children: [
         Expanded(
