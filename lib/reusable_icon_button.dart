@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'constants.dart';
+
 class ReusableIconButton extends StatelessWidget {
   final double fontSize;
   final IconData icon;
@@ -24,10 +26,7 @@ class ReusableIconButton extends StatelessWidget {
         SizedBox(height: 15.0),
         Text(
           this.text,
-          style: TextStyle(
-            fontSize: this.fontSize != null ? this.fontSize : 18.0,
-            color: this.textColor != null ? this.textColor : Color(0xFF8D8E98),
-          ),
+          style: kLabelTextStyle,
         ),
       ],
       mainAxisAlignment: MainAxisAlignment.center,
