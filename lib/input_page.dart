@@ -1,3 +1,4 @@
+import 'package:bmi_calculator/reusable_number_card.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -15,6 +16,8 @@ class InputPage extends StatefulWidget {
 class _InputPageState extends State<InputPage> {
   Gender selectedGender;
   double height = 180.0;
+  int weight = 60;
+  int age = 18;
 
   @override
   Widget build(BuildContext context) {
@@ -110,10 +113,42 @@ class _InputPageState extends State<InputPage> {
           child: Row(
             children: [
               Expanded(
-                child: ReusableCard(),
+                child: ReusableCard(
+                  child: ReusableNumberCard(
+                    value: this.weight,
+                    title: 'WEIGHT',
+                    onIncrease: () {
+                      setState(() {
+                        this.weight++;
+                      });
+                    },
+                    onDecrease: () {
+                      setState(() {
+                        this.weight--;
+                        this.weight = this.weight < 0 ? 0 : this.weight;
+                      });
+                    },
+                  ),
+                ),
               ),
               Expanded(
-                child: ReusableCard(),
+                child: ReusableCard(
+                  child: ReusableNumberCard(
+                    title: 'AGE',
+                    value: this.age,
+                    onIncrease: () {
+                      setState(() {
+                        this.age++;
+                      });
+                    },
+                    onDecrease: () {
+                      setState(() {
+                        this.age--;
+                        this.age = this.age < 1 ? 1 : this.age;
+                      });
+                    },
+                  ),
+                ),
               ),
             ],
           ),

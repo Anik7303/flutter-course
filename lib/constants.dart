@@ -8,6 +8,7 @@ const Color kCardTextColor = Color(0xFF8D8E98);
 const Color kSliderActiveColor = Color(0xFFEB1555);
 const Color kSliderInactiveColor = Color(0xFF8D8E98);
 const Color kSliderOverlayColor = Color(0x29EB1555);
+const Color kRoundButtonFillColor = Color(0xFF4C4F5E);
 
 const TextStyle kLabelTextStyle = TextStyle(
   fontSize: 18.0,
