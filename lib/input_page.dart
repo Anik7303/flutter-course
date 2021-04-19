@@ -14,6 +14,7 @@ class InputPage extends StatefulWidget {
 
 class _InputPageState extends State<InputPage> {
   Gender selectedGender;
+  double height = 180.0;
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +59,52 @@ class _InputPageState extends State<InputPage> {
           ),
         ),
         Expanded(
-          child: ReusableCard(),
+          child: ReusableCard(
+            child: Column(
+              children: [
+                Text(
+                  'HEIGHT',
+                  style: kLabelTextStyle,
+                ),
+                Row(
+                  children: [
+                    Text(
+                      this.height.toInt().toString(),
+                      style: kNumberTextStyle,
+                    ),
+                    Text(
+                      'cm',
+                      style: kLabelTextStyle,
+                    )
+                  ],
+                  crossAxisAlignment: CrossAxisAlignment.baseline,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  textBaseline: TextBaseline.alphabetic,
+                ),
+                SliderTheme(
+                  data: SliderTheme.of(context).copyWith(
+                    activeTrackColor: kSliderActiveColor,
+                    inactiveTrackColor: kSliderInactiveColor,
+                    overlayColor: kSliderOverlayColor,
+                    overlayShape: RoundSliderOverlayShape(overlayRadius: 30.0),
+                    thumbColor: kSliderActiveColor,
+                    thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15.0),
+                  ),
+                  child: Slider(
+                    value: this.height,
+                    onChanged: (newHeight) {
+                      setState(() {
+                        this.height = newHeight;
+                      });
+                    },
+                    min: kMinHeight,
+                    max: kMaxHeight,
+                  ),
+                )
+              ],
+              mainAxisAlignment: MainAxisAlignment.center,
+            ),
+          ),
         ),
         Expanded(
           child: Row(
@@ -79,6 +125,7 @@ class _InputPageState extends State<InputPage> {
           width: double.infinity,
         )
       ],
+      crossAxisAlignment: CrossAxisAlignment.stretch,
     );
   }
 }
