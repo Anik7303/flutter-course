@@ -1,11 +1,12 @@
-import 'package:bmi_calculator/reusable_number_card.dart';
+import 'package:bmi_calculator/calculator_brain.dart';
+import 'package:bmi_calculator/components/bottom_button.dart';
+import 'package:bmi_calculator/components/reusable_card.dart';
+import 'package:bmi_calculator/components/reusable_icon_button.dart';
+import 'package:bmi_calculator/components/reusable_number_card.dart';
+import 'package:bmi_calculator/constants.dart';
+import 'package:bmi_calculator/screens/results_page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-import 'constants.dart';
-import 'resizable_card.dart';
-import 'results_page.dart';
-import 'reusable_icon_button.dart';
 
 enum Gender { Male, Female }
 
@@ -154,27 +155,23 @@ class _InputPageState extends State<InputPage> {
             ],
           ),
         ),
-        GestureDetector(
-          child: Container(
-            child: Center(
-              child: Text(
-                'CALCULATE',
-                style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.w700,
+        BottomButton(
+          onTap: () {
+            CalculatorBrain calc =
+                CalculatorBrain(height: this.height, weight: this.weight);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ResultsPage(
+                  bmi: calc.calculateBMI(),
+                  interpretation: calc.getInterpretation(),
+                  result: calc.getResult(),
                 ),
               ),
-            ),
-            color: kBottomButtonColor,
-            height: kBottomButtonHeight,
-            margin: const EdgeInsets.only(top: 15.0),
-            width: double.infinity,
-          ),
-          onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ResultsPage()));
+            );
             // Navigator.pushNamed(context, 'results');
           },
+          title: 'Calculate',
         )
       ],
       crossAxisAlignment: CrossAxisAlignment.stretch,
