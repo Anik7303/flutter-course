@@ -8,7 +8,6 @@ class NetworkHelper {
   NetworkHelper({this.url});
 
   Future<dynamic> getData() async {
-    print('url: $url');
     Uri uri = Uri.parse(url);
     try {
       var response = await http.get(uri);
@@ -20,6 +19,7 @@ class NetworkHelper {
       print(response.statusCode);
     } catch (e) {
       print(e);
+      return null;
     }
   }
 }

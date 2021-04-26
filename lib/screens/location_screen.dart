@@ -1,3 +1,4 @@
+import 'package:clima/screens/city_screen.dart';
 import 'package:clima/services/weather.dart';
 import 'package:clima/utilities/constants.dart';
 import 'package:flutter/material.dart';
@@ -21,20 +22,26 @@ class _LocationScreenState extends State<LocationScreen> {
   void initState() {
     super.initState();
 
-    print(widget.weather);
     updateUI(widget.weather);
   }
 
   void updateUI(dynamic data) {
-    WeatherModel weather = WeatherModel();
     setState(() {
+      if (data == null) {
+        _cityName = '';
+        _temperature = 0;
+        _weatherMessage = 'Could not get location';
+        _weatherIcon = 'Error';
+        return;
+      }
+
       var temp = data['main']['temp'];
       _cityName = data['name'];
       int condition = data['weather'][0]['id'];
 
       _temperature = temp.toInt();
-      _weatherMessage = weather.getMessage(_temperature);
-      _weatherIcon = weather.getWeatherIcon(condition);
+      _weatherMessage = WeatherModel.getMessage(_temperature);
+      _weatherIcon = WeatherModel.getWeatherIcon(condition);
     });
   }
 
@@ -64,14 +71,30 @@ class _LocationScreenState extends State<LocationScreen> {
                       Icons.near_me,
                       size: 50.0,
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      dynamic weatherData =
+                          await WeatherModel.getLocationWeather();
+                      updateUI(weatherData);
+                    },
                   ),
                   TextButton(
                     child: Icon(
                       Icons.location_city,
                       size: 50.0,
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      var cityName = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CityScreen(),
+                        ),
+                      );
+                      if (cityName != null) {
+                        var weatherData =
+                            await WeatherModel.getCityWeather(cityName);
+                        updateUI(weatherData);
+                      }
+                    },
                   ),
                 ],
               ),
@@ -105,7 +128,3 @@ class _LocationScreenState extends State<LocationScreen> {
     );
   }
 }
-
-// _cityName = jsonData['name'];
-// _conditionId = jsonData['weather'][0]['id'];
-// _temperature = jsonData['main']['temp'];
