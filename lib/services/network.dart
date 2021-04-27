@@ -9,7 +9,6 @@ class NetworkHelper {
 
   static Uri getUrl(String crypto, String currency) {
     String url = '$_baseUrl/$crypto/$currency?apikey=$_appKey';
-    print('url: $url');
     return Uri.parse(url);
   }
 
@@ -17,15 +16,16 @@ class NetworkHelper {
     return data['rate'];
   }
 
-  static Future<double> getBtcRate(String ofCurrency) async {
+  static Future<double> getExchangeRate(String from, String to) async {
     try {
-      Uri url = getUrl('BTC', ofCurrency);
+      Uri url = getUrl(from, to);
       http.Response res = await http.get(url);
-      print('Response code: ${res.statusCode}');
+
       if (res.statusCode == 200) {
         var data = jsonDecode(res.body);
         return parseRate(data);
       }
+
       print(res.statusCode);
     } catch (e) {
       print(e);

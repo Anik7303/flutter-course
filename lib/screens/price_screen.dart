@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bitcoin_ticker/utilities/coin_data.dart';
 import 'package:bitcoin_ticker/services/network.dart';
+import 'package:bitcoin_ticker/components/reusable_card.dart';
 
 class PriceScreen extends StatefulWidget {
   @override
@@ -12,21 +13,29 @@ class PriceScreen extends StatefulWidget {
 class _PriceScreenState extends State<PriceScreen> {
   var _selectedItem;
   var _btcText;
+  var _ethText;
+  var _ltcText;
 
   @override
   void initState() {
     super.initState();
 
     _selectedItem = Platform.isIOS ? currenciesList.indexOf('USD') : 'USD';
-    _btcText = '1 BTC = ?';
+    _btcText = '1 BTC = ? $_selectedItem';
+    _ethText = '1 ETH = ? $_selectedItem';
+    _ltcText = '1 LTC = ? $_selectedItem';
     updateUI();
   }
 
   void updateUI() async {
-    double btc = await NetworkHelper.getBtcRate(_selectedItem);
+    double btc = await NetworkHelper.getExchangeRate('BTC', _selectedItem);
+    double eth = await NetworkHelper.getExchangeRate('ETH', _selectedItem);
+    double ltc = await NetworkHelper.getExchangeRate('LTC', _selectedItem);
 
     setState(() {
       _btcText = '1 BTC = ${btc.toStringAsFixed(2)} $_selectedItem';
+      _ethText = '1 ETH = ${eth.toStringAsFixed(2)} $_selectedItem';
+      _ltcText = '1 LTC = ${ltc.toStringAsFixed(2)} $_selectedItem';
     });
   }
 
@@ -86,26 +95,20 @@ class _PriceScreenState extends State<PriceScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 0),
-            child: Card(
-              color: Colors.lightBlueAccent,
-              elevation: 5.0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
+          Column(
+            children: [
+              ReusableCard(
+                text: _btcText,
               ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
-                child: Text(
-                  _btcText,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    color: Colors.white,
-                  ),
-                ),
+              ReusableCard(
+                text: _ethText,
               ),
-            ),
+              ReusableCard(
+                text: _ltcText,
+              )
+            ],
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
           ),
           Container(
             height: 150.0,
