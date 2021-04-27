@@ -2,6 +2,7 @@ import 'dart:io' show Platform;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bitcoin_ticker/utilities/coin_data.dart';
+import 'package:bitcoin_ticker/services/network.dart';
 
 class PriceScreen extends StatefulWidget {
   @override
@@ -10,12 +11,23 @@ class PriceScreen extends StatefulWidget {
 
 class _PriceScreenState extends State<PriceScreen> {
   var _selectedItem;
+  var _btcText;
 
   @override
   void initState() {
     super.initState();
 
     _selectedItem = Platform.isIOS ? currenciesList.indexOf('USD') : 'USD';
+    _btcText = '1 BTC = ?';
+    updateUI();
+  }
+
+  void updateUI() async {
+    double btc = await NetworkHelper.getBtcRate(_selectedItem);
+
+    setState(() {
+      _btcText = '1 BTC = ${btc.toStringAsFixed(2)} $_selectedItem';
+    });
   }
 
   DropdownButton androidItemPicker() {
@@ -30,11 +42,14 @@ class _PriceScreenState extends State<PriceScreen> {
       );
     }
 
+    // NetworkHelper networkHelper = NetworkHelper();
+
     return DropdownButton(
       items: items,
-      onChanged: (value) {
+      onChanged: (value) async {
         setState(() {
           _selectedItem = value;
+          updateUI();
         });
       },
       value: _selectedItem,
@@ -54,7 +69,7 @@ class _PriceScreenState extends State<PriceScreen> {
       itemExtent: 32.0,
       onSelectedItemChanged: (index) {
         setState(() {
-          _selectedItem = index;
+          _selectedItem = currenciesList[index];
         });
       },
     );
@@ -62,6 +77,7 @@ class _PriceScreenState extends State<PriceScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // updateUI();
     return Scaffold(
       appBar: AppBar(
         title: Text('🤑 Coin Ticker'),
@@ -81,7 +97,7 @@ class _PriceScreenState extends State<PriceScreen> {
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
                 child: Text(
-                  '1 BTC = ? USD',
+                  _btcText,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20.0,
