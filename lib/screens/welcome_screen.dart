@@ -1,4 +1,4 @@
-import 'package:flash_chat/components/auth_button.dart';
+import 'package:flash_chat/components/rounded_button.dart';
 import 'package:flash_chat/screens/login_screen.dart';
 import 'package:flash_chat/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
@@ -21,46 +21,21 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 
     _controller = AnimationController(
       duration: Duration(seconds: 1),
-      // upperBound: 100.0,
       vsync: this,
     );
-
-    // _animation = CurvedAnimation(parent: _controller, curve: Curves.bounceIn);
-    // _animation = CurvedAnimation(parent: _controller, curve: Curves.decelerate);
-
     _animation = ColorTween(begin: Colors.blueGrey, end: Colors.white)
         .animate(_controller);
-
     _controller.forward();
-
-    // _controller.addListener(updateAnimationValue);
     _animation.addListener(updateAnimationValue);
-
-    // _controller.addStatusListener(updateAnimationStatus);
-    // _animation.addStatusListener(updateAnimationStatus);
-  }
-
-  void updateAnimationStatus(status) {
-    print(status);
-    if (status == AnimationStatus.completed) {
-      _controller.reverse(from: 1.0);
-    } else if (status == AnimationStatus.dismissed) {
-      _controller.forward(from: 0.0);
-    }
   }
 
   void updateAnimationValue() {
     setState(() {});
-    // print('controller value: ${_controller.value}');
-    // print('animation value: ${_animation.value}');
   }
 
   @override
   void dispose() {
     _animation.removeListener(updateAnimationValue);
-    _animation.removeStatusListener(updateAnimationStatus);
-    _controller.removeListener(updateAnimationValue);
-    _controller.removeStatusListener(updateAnimationStatus);
     _controller.dispose();
     super.dispose();
   }
@@ -96,14 +71,14 @@ class _WelcomeScreenState extends State<WelcomeScreen>
             SizedBox(
               height: 48.0,
             ),
-            AuthButton(
+            RoundedButton(
               color: Colors.lightBlueAccent,
               onPressed: () {
                 Navigator.pushNamed(context, LoginScreen.id);
               },
               title: 'Log In',
             ),
-            AuthButton(
+            RoundedButton(
               color: Colors.blueAccent,
               onPressed: () {
                 Navigator.pushNamed(context, RegistrationScreen.id);

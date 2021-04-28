@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class AuthButton extends StatelessWidget {
+class RoundedButton extends StatelessWidget {
   final Function onPressed;
   final String title;
   final Color color;
 
-  const AuthButton({
+  const RoundedButton({
     Key key,
     this.color = Colors.blueAccent,
     @required this.onPressed,
