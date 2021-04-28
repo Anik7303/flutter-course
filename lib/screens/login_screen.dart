@@ -1,5 +1,5 @@
-import 'package:flash_chat/components/RoundedTextField.dart';
 import 'package:flash_chat/components/rounded_button.dart';
+import 'package:flash_chat/components/rounded_text_field.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
