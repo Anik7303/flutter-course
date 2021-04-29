@@ -62,7 +62,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                 ),
                 DefaultTextStyle(
                   style: TextStyle(
-                    color: Colors.black54,
+                    color: Colors.black,
                     fontSize: 45.0,
                     fontWeight: FontWeight.w900,
                   ),

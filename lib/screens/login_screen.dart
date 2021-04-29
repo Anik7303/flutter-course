@@ -10,6 +10,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  String _email;
+  String _password;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,14 +35,19 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             RoundedTextField(
               hint: 'Email',
-              onChanged: (value) {},
+              onChanged: (value) {
+                _email = value;
+              },
+              keyboardType: TextInputType.emailAddress,
             ),
             SizedBox(
               height: 8.0,
             ),
             RoundedTextField(
               hint: 'Password',
-              onChanged: (value) {},
+              onChanged: (value) {
+                _password = value;
+              },
               obscureText: true,
             ),
             SizedBox(
@@ -47,7 +55,9 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             RoundedButton(
               color: Colors.lightBlueAccent,
-              onPressed: () {},
+              onPressed: () {
+                print('email: $_email | password: $_password');
+              },
               title: 'Log In',
             ),
           ],
