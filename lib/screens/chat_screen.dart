@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flash_chat/components/message_stream.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -12,12 +14,16 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final TextEditingController messageTextController = TextEditingController();
+
   bool _loading = false;
-  User loggedInUser;
+  User _loggedInUser;
+  String _message;
 
   void getCurrentUser() {
     try {
-      loggedInUser = _auth.currentUser;
+      _loggedInUser = _auth.currentUser;
     } catch (e) {
       print(e);
     }
@@ -34,6 +40,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return ModalProgressHUD(
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
           leading: null,
           actions: <Widget>[
@@ -48,6 +55,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     _loading = false;
                   });
                   Navigator.pop(context);
+                  // getMessageStream();
                 }),
           ],
           title: Text('⚡️Chat'),
@@ -58,6 +66,10 @@ class _ChatScreenState extends State<ChatScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
+              MessageStream(
+                stream: _firestore.collection('messages').snapshots(),
+                loggedInUser: _loggedInUser,
+              ),
               Container(
                 decoration: kMessageContainerDecoration,
                 child: Row(
@@ -65,15 +77,23 @@ class _ChatScreenState extends State<ChatScreen> {
                   children: <Widget>[
                     Expanded(
                       child: TextField(
-                        onChanged: (value) {
-                          //Do something with the user input.
-                        },
+                        controller: messageTextController,
+                        onChanged: (v) => _message = v,
                         decoration: kMessageTextFieldDecoration,
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                        keyboardType: TextInputType.text,
                       ),
                     ),
                     FlatButton(
                       onPressed: () {
-                        //Implement send functionality.
+                        messageTextController.clear();
+                        _firestore.collection('messages').add({
+                          'timestamp': DateTime.now(),
+                          'sender': _loggedInUser.email,
+                          'text': _message,
+                        });
                       },
                       child: Text(
                         'Send',
