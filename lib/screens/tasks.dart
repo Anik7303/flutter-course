@@ -1,23 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todoey/components/tasks_list.dart';
-import 'package:todoey/models/task.dart';
+import 'package:todoey/models/data.dart';
 import 'package:todoey/screens/add_task.dart';
 
-class TasksScreen extends StatefulWidget {
-  @override
-  _TasksScreenState createState() => _TasksScreenState();
-}
-
-class _TasksScreenState extends State<TasksScreen> {
-  List<Task> tasks = [];
-
-  void onNewTaskAdd({String taskTitle}) {
-    setState(() {
-      tasks.add(Task(title: taskTitle));
-      Navigator.pop(context);
-    });
-  }
-
+class TasksScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +35,7 @@ class _TasksScreenState extends State<TasksScreen> {
                     ),
                   ),
                   Text(
-                    '${tasks.length} tasks',
+                    '${Provider.of<Data>(context).getTasksCount()} tasks',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,
@@ -60,7 +47,7 @@ class _TasksScreenState extends State<TasksScreen> {
             ),
             Expanded(
               child: Container(
-                child: TasksList(tasks: tasks),
+                child: TasksList(),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(20.0),
@@ -85,14 +72,7 @@ class _TasksScreenState extends State<TasksScreen> {
         onPressed: () {
           showModalBottomSheet(
             context: context,
-            builder: (context) => AddTaskScreen(
-              onSubmit: ({String taskTitle}) {
-                setState(() {
-                  tasks.add(Task(title: taskTitle));
-                  Navigator.pop(context);
-                });
-              },
-            ),
+            builder: (context) => AddTaskScreen(),
           );
         },
       ),

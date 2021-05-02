@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey/models/data.dart';
 
 class AddTaskScreen extends StatefulWidget {
-  final Function onSubmit;
-
-  AddTaskScreen({Key key, @required this.onSubmit}) : super(key: key);
+  AddTaskScreen({Key key}) : super(key: key);
 
   @override
   _AddTaskScreenState createState() => _AddTaskScreenState();
@@ -11,7 +11,7 @@ class AddTaskScreen extends StatefulWidget {
 
 class _AddTaskScreenState extends State<AddTaskScreen> {
   String _taskTitle;
-  TextEditingController inputController = TextEditingController();
+  final TextEditingController inputController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -52,8 +52,12 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               ),
               TextButton(
                 onPressed: () {
-                  widget.onSubmit(taskTitle: _taskTitle);
+                  Provider.of<Data>(
+                    context,
+                    listen: false,
+                  ).addTask(title: _taskTitle);
                   inputController.clear();
+                  Navigator.pop(context);
                 },
                 child: Center(
                   child: Text(
