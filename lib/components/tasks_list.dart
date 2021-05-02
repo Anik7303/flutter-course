@@ -3,11 +3,11 @@ import 'package:todoey/components/task_tile.dart';
 import 'package:todoey/models/task.dart';
 
 class TasksList extends StatefulWidget {
-  final List<Task> list;
+  final List<Task> tasks;
 
   TasksList({
     Key key,
-    @required this.list,
+    @required this.tasks,
   }) : super(key: key);
 
   @override
@@ -20,11 +20,11 @@ class _TasksListState extends State<TasksList> {
     return ListView.builder(
       itemBuilder: (context, index) {
         return TaskTile(
-          title: this.widget.list[index].title,
-          checked: this.widget.list[index].isDone,
+          title: this.widget.tasks[index].title,
+          checked: this.widget.tasks[index].isDone,
           toggleCheckedState: (checkboxState) {
             setState(() {
-              widget.list[index].toggleDone();
+              widget.tasks[index].toggleDone();
             });
           },
         );
@@ -33,7 +33,7 @@ class _TasksListState extends State<TasksList> {
         horizontal: 20.0,
         vertical: 10.0,
       ),
-      itemCount: this.widget.list.length,
+      itemCount: this.widget.tasks.length,
     );
   }
 }

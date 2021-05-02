@@ -14,10 +14,9 @@ class _TasksScreenState extends State<TasksScreen> {
   void onNewTaskAdd({String taskTitle}) {
     setState(() {
       tasks.add(Task(title: taskTitle));
+      Navigator.pop(context);
     });
   }
-
-  void onCheckedStateToggle({int taskIndex}) {}
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +60,7 @@ class _TasksScreenState extends State<TasksScreen> {
             ),
             Expanded(
               child: Container(
-                child: TasksList(list: tasks),
+                child: TasksList(tasks: tasks),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(20.0),
@@ -87,7 +86,12 @@ class _TasksScreenState extends State<TasksScreen> {
           showModalBottomSheet(
             context: context,
             builder: (context) => AddTaskScreen(
-              onSubmit: onNewTaskAdd,
+              onSubmit: ({String taskTitle}) {
+                setState(() {
+                  tasks.add(Task(title: taskTitle));
+                  Navigator.pop(context);
+                });
+              },
             ),
           );
         },
