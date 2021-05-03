@@ -52,10 +52,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               ),
               TextButton(
                 onPressed: () {
-                  Provider.of<Data>(
-                    context,
-                    listen: false,
-                  ).addTask(title: _taskTitle);
+                  Provider.of<Data>(context, listen: false)
+                      .addTask(title: _taskTitle);
                   inputController.clear();
                   Navigator.pop(context);
                 },
@@ -71,7 +69,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   backgroundColor:
                       MaterialStateProperty.all(Colors.lightBlueAccent),
                 ),
-              ),
+              )
             ],
             crossAxisAlignment: CrossAxisAlignment.stretch,
           ),
