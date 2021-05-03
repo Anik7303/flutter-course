@@ -16,40 +16,34 @@ class Data extends ChangeNotifier {
     return _tasks[index];
   }
 
-  // get tasks => _tasks;
-
-  // set tasks(List<Task> updatedTasks) => List.from(updatedTasks);
-
-  // set tasks(List<Task> updatedTasks) {
-  //   _tasks = List.from(updatedTasks);
-  // }
-
   int get taskCount => _tasks.length;
 
-  // int getTasksCount() {
-  //   return _tasks.length;
-  // }
-
-  // void addTask({title}) {
-  //   _tasks.add(Task(title: title));
-  //   notifyListeners();
-  // }
-  //
-  // void toggleCheckedState({index}) {
-  //   _tasks[index].toggleDone();
-  //   notifyListeners();
-  // }
   void addTask({title}) {
-    List<Task> updatedTasks = List.from(_tasks);
-    updatedTasks.add(Task(title: title));
-    _tasks = updatedTasks;
+    _tasks.add(Task(title: title));
     notifyListeners();
   }
 
   void toggleCheckedState({index}) {
-    List<Task> updateTasks = List.from(_tasks);
-    updateTasks[index].toggleDone();
-    _tasks = updateTasks;
+    _tasks[index].toggleDone();
     notifyListeners();
   }
+
+  void deleteTask({index}) {
+    _tasks.removeAt(index);
+    notifyListeners();
+  }
+
+  // void addTask({title}) {
+  //   List<Task> updatedTasks = List.from(_tasks);
+  //   updatedTasks.add(Task(title: title));
+  //   _tasks = updatedTasks;
+  //   notifyListeners();
+  // }
+
+  // void toggleCheckedState({index}) {
+  //   List<Task> updateTasks = List.from(_tasks);
+  //   updateTasks[index].toggleDone();
+  //   _tasks = updateTasks;
+  //   notifyListeners();
+  // }
 }
